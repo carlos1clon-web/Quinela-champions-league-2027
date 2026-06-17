@@ -41,7 +41,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
         .btn-facebook {
-            background-color: #00bcd4;
+            background-color: #1e7bd8;
             color: white;
             padding: 12px;
             margin-bottom: 15px;
@@ -66,7 +66,7 @@
             font-weight: bold;
             text-transform: uppercase;
         }
-        /* Tarjeta de Partido Estilo Nuevo */
+        /* Tarjeta de Partido */
         .partido-card {
             background-color: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -102,30 +102,26 @@
             box-shadow: 0 3px 6px rgba(0,0,0,0.2);
         }
         .btn-opcion.seleccionado {
-            background-color: #00bcd4 !important;
-            box-shadow: 0 0 12px #00bcd4;
+            background-color: #3cc226 !important; /* Verde como tu imagen */
+            box-shadow: 0 0 12px #3cc226;
             transform: scale(1.03);
         }
-        /* Lista de Quinielas Agregadas */
+        /* Caja de Desglose en Pantalla (Fondo oscuro como tu foto) */
         .lista-agregadas {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            background-color: #07111e;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
             padding: 15px;
             margin: 20px 0;
             text-align: left;
+            font-family: monospace; /* Fuente de sistema para códigos */
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
         }
-        .lista-agregadas h3 {
-            margin-top: 0;
-            color: #1e90ff;
-            text-align: center;
-        }
-        .quiniela-item {
-            background-color: rgba(0, 0, 0, 0.4);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            font-size: 13px;
-            border-left: 4px solid #00bcd4;
+        .quiniela-linea {
+            font-size: 15px;
+            color: #fff;
+            margin-bottom: 6px;
+            line-height: 1.4;
         }
         /* Botones de Acción de abajo */
         .btn-accion {
@@ -140,9 +136,9 @@
             margin-bottom: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-        .btn-agregar { background-color: #00a8cc; }
-        .btn-limpiar { background-color: #00bcd4; }
-        .btn-aleatorio { background-color: #009688; }
+        .btn-agregar { background-color: #29b6f6; }
+        .btn-limpiar { background-color: #29b6f6; }
+        .btn-aleatorio { background-color: #29b6f6; }
         .btn-whatsapp { 
             background-color: #25d366; 
             font-size: 18px;
@@ -152,218 +148,201 @@
 </head>
 <body>
 
-    <div class="header">Quinielas Liga MX</div>
+    <div class="header">Quiniela Liga MX</div>
 
     <div class="container">
-        <!-- Bloques informativos superiores -->
+        <!-- Bloques informativos -->
         <div class="info-block">Jornada 10</div>
-        <div class="info-block">Base: $10 | Doble x2 | Triple x3</div>
+        <div class="info-block">$10 pesos por quiniela</div>
         <div class="info-block">Cierre: Viernes 20:00</div>
         <div class="info-block">Informes al +52 55 7224 6040</div>
-        
-        <a href="https://www.facebook.com/share/g/1DC7Z9rh9t/?mibextid=wwXIfr" target="_blank" class="btn-facebook">
-            Grupo de Facebook
-        </a>
 
         <div class="info-block" style="background-color: rgba(255,255,255,0.95); font-size: 18px;">
-            COSTO JUGADA ACTUAL: $<span id="total-pago">0.00</span>
+            COSTO ACTUAL: $<span id="total-pago">0.00</span>
         </div>
         
-        <input type="text" id="nombre-participante" class="input-box" placeholder="Nombre del participante">
+        <input type="text" id="nombre-participante" class="input-box" placeholder="NOMBRE DEL PARTICIPANTE">
 
-        <!-- AQUÍ ESTÁN LOS 9 PARTIDOS -->
-        
-        <!-- Partido 1 -->
-        <div class="partido-card" data-partido="1" data-equipos="Real Madrid vs Milan">
+        <!-- LOS 9 PARTIDOS -->
+        <div class="partido-card">
             <div class="partido-titulo">Real Madrid vs Milan</div>
             <div class="opciones-container">
-                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">V</button>
             </div>
         </div>
 
-        <!-- Partido 2 -->
-        <div class="partido-card" data-partido="2" data-equipos="Barcelona vs Bayern">
+        <div class="partido-card">
             <div class="partido-titulo">Barcelona vs Bayern</div>
             <div class="opciones-container">
-                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">V</button>
             </div>
         </div>
 
-        <!-- Partido 3 -->
-        <div class="partido-card" data-partido="3" data-equipos="Man. City vs Inter">
+        <div class="partido-card">
             <div class="partido-titulo">Man. City vs Inter</div>
             <div class="opciones-container">
-                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">V</button>
             </div>
         </div>
 
-        <!-- Partido 4 -->
-        <div class="partido-card" data-partido="4" data-equipos="PSG vs Atletico Madrid">
+        <div class="partido-card">
             <div class="partido-titulo">PSG vs Atletico Madrid</div>
             <div class="opciones-container">
-                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">V</button>
             </div>
         </div>
 
-        <!-- Partido 5 -->
-        <div class="partido-card" data-partido="5" data-equipos="Arsenal vs Juventus">
+        <div class="partido-card">
             <div class="partido-titulo">Arsenal vs Juventus</div>
             <div class="opciones-container">
-                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">V</button>
             </div>
         </div>
 
-        <!-- Partido 6 -->
-        <div class="partido-card" data-partido="6" data-equipos="Dortmund vs Liverpool">
+        <div class="partido-card">
             <div class="partido-titulo">Dortmund vs Liverpool</div>
             <div class="opciones-container">
-                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">V</button>
             </div>
         </div>
 
-        <!-- Partido 7 -->
-        <div class="partido-card" data-partido="7" data-equipos="Benfica vs Monaco">
+        <div class="partido-card">
             <div class="partido-titulo">Benfica vs Monaco</div>
             <div class="opciones-container">
-                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">V</button>
             </div>
         </div>
 
-        <!-- Partido 8 -->
-        <div class="partido-card" data-partido="8" data-equipos="Pumas vs Chivas">
+        <div class="partido-card">
             <div class="partido-titulo">Pumas vs Chivas</div>
             <div class="opciones-container">
-                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">V</button>
             </div>
         </div>
 
-        <!-- Partido 9 -->
-        <div class="partido-card" data-partido="9" data-equipos="América vs Cruz Azul">
+        <div class="partido-card">
             <div class="partido-titulo">América vs Cruz Azul</div>
             <div class="opciones-container">
-                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
-                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this)">V</button>
             </div>
         </div>
 
-        <!-- BOTONES DE ACCIÓN -->
-        <button class="btn-accion btn-agregar" onclick="agregarQuinielaLista()">Agregar Quiniela</button>
-        <button class="btn-accion btn-limpiar" onclick="limpiarSelecciones()">Limpiar Actual</button>
-        <button class="btn-accion btn-aleatorio" onclick="seleccionarAleatorio()">Llenado Aleatorio</button>
+        <!-- BOTONES PRINCIPALES -->
+        <button class="btn-accion btn-agregar" onclick="generarYDesglosar()">Generar Quiniela</button>
+        <button class="btn-accion btn-limpiar" onclick="limpiarSelecciones()">Limpiar</button>
+        <button class="btn-accion btn-aleatorio" onclick="seleccionarAleatorio()">Aleatorio</button>
         
-        <!-- SECCIÓN DE DESGLOSE VISUAL (Aquí se van acumulando) -->
-        <div class="lista-agregadas">
-            <h3>Quinielas en esta venta (<span id="cuenta-lista">0</span>)</h3>
-            <div id="contenedor-items">
-                <!-- Aquí se meten solitas mediante JavaScript -->
-            </div>
+        <!-- CAJA DE DESGLOSE EN PANTALLA -->
+        <div class="lista-agregadas" id="cuadro-desglose" style="display:none;">
+            <!-- Aquí se imprimen solos los #1 -> V - E... -->
         </div>
 
-        <button class="btn-accion btn-whatsapp" onclick="enviarWhatsApp()">Enviar todas por WhatsApp</button>
+        <button class="btn-accion btn-whatsapp" onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+
+        <a href="https://www.facebook.com/share/g/1DC7Z9rh9t/?mibextid=wwXIfr" target="_blank" class="btn-facebook" style="margin-top:20px;">
+            📣 ¡Únete al grupo para ver resultados!<br><br>⚽ Ir al Grupo de Facebook
+        </a>
     </div>
 
     <script>
-        // Arreglo global para almacenar las quinielas desglosadas en memoria limpia
-        let lasQuinielasGuardadas = [];
+        // Lista global que guarda todas las combinaciones desglosadas listas para enviar
+        let quinielasSencillasFinales = [];
+        let nombreGuardado = "";
 
-        function seleccionar(boton, tipo) {
-            // Cambio clave: Ahora en lugar de borrar los demás, solo alterna el que tocas
+        function seleccionar(boton) {
             boton.classList.toggle('seleccionado');
             calcularTotal();
         }
 
         function calcularTotal() {
             let tarjetas = document.querySelectorAll('.partido-card');
-            let jugadaValida = true;
-            let dobles = 0;
-            let triples = 0;
+            let combinaciones = 1;
+            let incompleto = false;
 
             tarjetas.forEach(tarjeta => {
-                let marcados = tarjeta.querySelectorAll('.btn-opcion.seleccionado').length;
-                if (marcados === 0) { jugadaValida = false; }
-                if (marcados === 2) { dobles++; }
-                if (marcados === 3) { triples++; }
+                let seleccionados = tarjeta.querySelectorAll('.btn-opcion.seleccionado').length;
+                if (seleccionados === 0) { incompleto = true; }
+                else { combinaciones *= seleccionados; }
             });
 
-            if (!jugadaValida) {
+            if (incompleto) {
                 document.getElementById('total-pago').innerText = "0.00";
                 return 0;
             }
 
-            // Aplicamos la fórmula matemática exacta de las quinielas múltiples
-            let costo = 10 * Math.pow(2, dobles) * Math.pow(3, triples);
+            let costo = combinaciones * 10;
             document.getElementById('total-pago').innerText = costo.toFixed(2);
             return costo;
         }
 
-        function agregarQuinielaLista() {
-            let nombre = document.getElementById('nombre-participante').value.trim();
-            if (!nombre) {
-                alert("Por favor, pon el Nombre del Participante antes de agregar.");
-                return;
+        // ALGORITMO DE PERMUTACIÓN (La magia matemática)
+        function obtenerCombinaciones(listas, index = 0, actual = []) {
+            if (index === listas.length) {
+                return [actual.join(' - ')];
             }
-
-            let costoActual = calcularTotal();
-            if (costoActual === 0) {
-                alert("Por favor, selecciona al menos una opción (L, E, V) para cada partido.");
-                return;
+            let resultados = [];
+            for (let i = 0; i < listas[index].length; i++) {
+                resultados = resultados.concat(obtenerCombinaciones(listas, index + 1, actual.concat(listas[index][i])));
             }
-
-            let tarjetas = document.querySelectorAll('.partido-card');
-            let elecciones = [];
-
-            tarjetas.forEach(tarjeta => {
-                let marcados = tarjeta.querySelectorAll('.btn-opcion.seleccionado');
-                let marcasPartido = [];
-                marcados.forEach(btn => marcasPartido.push(btn.innerText));
-                // Guardamos el resultado ordenado como texto (ej: "L", "L-E", "L-E-V")
-                elecciones.push(marcasPartido.join('-'));
-            });
-
-            // Creamos un objeto limpio con los datos para Sheets en el futuro
-            let nuevaQuiniela = {
-                usuario: nombre.toUpperCase(),
-                pronosticos: elecciones,
-                costo: costoActual
-            };
-
-            lasQuinielasGuardadas.push(nuevaQuiniela);
-            actualizarDesgloseVisual();
-            
-            // Limpiamos los botones para la que sigue, pero dejamos el nombre por si el mismo cliente compra otra
-            let seleccionados = document.querySelectorAll('.btn-opcion.seleccionado');
-            for (let btn of seleccionados) { btn.classList.remove('seleccionado'); }
-            document.getElementById('total-pago').innerText = "0.00";
+            return resultados;
         }
 
-        function actualizarDesgloseVisual() {
-            let contenedor = document.getElementById('contenedor-items');
-            contenedor.innerHTML = "";
-            document.getElementById('cuenta-lista').innerText = lasQuinielasGuardadas.length;
+        function generarYDesglosar() {
+            let nombre = document.getElementById('nombre-participante').value.trim();
+            if (!nombre) {
+                alert("Por favor, ingresa el NOMBRE DEL PARTICIPANTE.");
+                return;
+            }
 
-            lasQuinielasGuardadas.forEach((q, index) => {
-                let div = document.createElement('div');
-                div.className = 'quiniela-item';
-                div.innerHTML = `<strong>#${index + 1} - ${q.usuario}</strong> ($${q.costo})<br>
-                                 Juegos: [ ${q.pronosticos.join(' | ')} ]`;
-                contenedor.appendChild(div);
+            let costo = calcularTotal();
+            if (costo === 0) {
+                alert("Asegúrate de marcar al menos una opción en los 9 partidos.");
+                return;
+            }
+
+            nombreGuardado = nombre;
+            let tarjetas = document.querySelectorAll('.partido-card');
+            let opcionesPorPartido = [];
+
+            // Extraemos lo que el usuario marcó en cada juego
+            tarjetas.forEach(tarjeta => {
+                let marcados = tarjeta.querySelectorAll('.btn-opcion.seleccionado');
+                let opciones = [];
+                marcados.forEach(btn => opciones.push(btn.innerText));
+                opcionesPorPartido.push(opciones);
+            });
+
+            // Corremos el algoritmo para desglosar todo en listas individuales sencillas
+            quinielasSencillasFinales = obtenerCombinaciones(opcionesPorPartido);
+
+            // Pintamos el desglose en la pantalla del celular tal como en tu imagen_9.png
+            let cuadro = document.getElementById('cuadro-desglose');
+            cuadro.innerHTML = "";
+            cuadro.style.display = "block";
+
+            quinielasSencillasFinales.forEach((q, idx) => {
+                let linea = document.createElement('div');
+                linea.className = 'quiniela-linea';
+                linea.innerText = `#${idx + 1} → ${q}`;
+                cuadro.appendChild(linea);
             });
         }
 
@@ -372,6 +351,10 @@
             for (let btn of seleccionados) { btn.classList.remove('seleccionado'); }
             document.getElementById('nombre-participante').value = "";
             document.getElementById('total-pago').innerText = "0.00";
+            document.getElementById('cuadro-desglose').innerHTML = "";
+            document.getElementById('cuadro-desglose').style.display = "none";
+            quinielasSencillasFinales = [];
+            nombreGuardado = "";
         }
 
         function seleccionarAleatorio() {
@@ -379,32 +362,34 @@
             tarjetas.forEach(tarjeta => {
                 let botones = tarjeta.getElementsByClassName('btn-opcion');
                 for (let btn of botones) { btn.classList.remove('seleccionado'); }
-                let indiceAzar = Math.floor(Math.random() * botones.length);
-                botones[indiceAzar].classList.add('seleccionado');
+                let azar = Math.floor(Math.random() * botones.length);
+                botones[azar].classList.add('seleccionado');
             });
             calcularTotal();
+            if(document.getElementById('nombre-participante').value.trim() !== "") {
+                generarYDesglosar();
+            }
         }
 
         function enviarWhatsApp() {
-            if (lasQuinielasGuardadas.length === 0) {
-                alert("No hay ninguna quiniela agregada en la lista para enviar.");
+            if (quinielasSencillasFinales.length === 0) {
+                alert("Primero debes ingresar el nombre y darle al botón 'Generar Quiniela'.");
                 return;
             }
 
-            let mensaje = `*QUINIELAS LIGA MX - LISTA DE VENTAS*\n\n`;
-            let granTotal = 0;
+            // Formato exacto de texto limpio de tu imagen_10.png
+            let mensaje = `📋 *Quiniela Liga MX*\n\n`;
+            mensaje += `👤 *Usuario:* ${nombreGuardado}\n\n`;
 
-            lasQuinielasGuardadas.forEach((q, index) => {
-                mensaje += `*Quiniela #${index + 1}*\n`;
-                mensaje += `👤 *Cliente:* ${q.usuario}\n`;
-                mensaje += `💰 *Costo:* $${q.costo}\n`;
-                mensaje += `📝 *Resultados:* ${q.pronosticos.join(',')}\n`;
-                mensaje += `---------------------------\n`;
-                granTotal += q.costo;
+            quinielasSencillasFinales.forEach((q, idx) => {
+                mensaje += `#${idx + 1} → ${q}\n`;
             });
 
-            mensaje += `\n*TOTAL A COBRAR:* $${granTotal.toFixed(2)}`;
+            let totalPagar = quinielasSencillasFinales.length * 10;
+            mensaje += `\n*Total:* ${quinielasSencillasFinales.length}\n`;
+            mensaje += `*A pagar:* $${totalPagar}`;
 
+            // TU NÚMERO DE TELÉFONO DE DESTINO:
             let miNumero = "525610791509"; 
             let url = `https://api.whatsapp.com/send?phone=${miNumero}&text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
