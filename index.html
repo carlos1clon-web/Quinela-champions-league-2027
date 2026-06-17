@@ -106,6 +106,27 @@
             box-shadow: 0 0 12px #00bcd4;
             transform: scale(1.03);
         }
+        /* Lista de Quinielas Agregadas */
+        .lista-agregadas {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .lista-agregadas h3 {
+            margin-top: 0;
+            color: #1e90ff;
+            text-align: center;
+        }
+        .quiniela-item {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            border-left: 4px solid #00bcd4;
+        }
         /* Botones de Acción de abajo */
         .btn-accion {
             width: 100%;
@@ -136,7 +157,7 @@
     <div class="container">
         <!-- Bloques informativos superiores -->
         <div class="info-block">Jornada 10</div>
-        <div class="info-block">$10 pesos por quiniela</div>
+        <div class="info-block">Base: $10 | Doble x2 | Triple x3</div>
         <div class="info-block">Cierre: Viernes 20:00</div>
         <div class="info-block">Informes al +52 55 7224 6040</div>
         
@@ -144,13 +165,13 @@
             Grupo de Facebook
         </a>
 
-        <div class="info-block" style="background-color: rgba(255,255,255,0.95);">
-            TOTAL: $<span id="total-pago">0.00</span>
+        <div class="info-block" style="background-color: rgba(255,255,255,0.95); font-size: 18px;">
+            COSTO JUGADA ACTUAL: $<span id="total-pago">0.00</span>
         </div>
         
         <input type="text" id="nombre-participante" class="input-box" placeholder="Nombre del participante">
 
-        <!-- AQUÍ EMPIEZAN LOS 9 PARTIDOS -->
+        <!-- AQUÍ ESTÁN LOS 9 PARTIDOS -->
         
         <!-- Partido 1 -->
         <div class="partido-card" data-partido="1" data-equipos="Real Madrid vs Milan">
@@ -222,7 +243,7 @@
             </div>
         </div>
 
-        <!-- Partido 8 (¡Aquí cambie a los equipos que me pediste!) -->
+        <!-- Partido 8 -->
         <div class="partido-card" data-partido="8" data-equipos="Pumas vs Chivas">
             <div class="partido-titulo">Pumas vs Chivas</div>
             <div class="opciones-container">
@@ -232,7 +253,7 @@
             </div>
         </div>
 
-        <!-- Partido 9 (¡Aquí el otro ejemplo!) -->
+        <!-- Partido 9 -->
         <div class="partido-card" data-partido="9" data-equipos="América vs Cruz Azul">
             <div class="partido-titulo">América vs Cruz Azul</div>
             <div class="opciones-container">
@@ -242,44 +263,122 @@
             </div>
         </div>
 
-        <!-- BOTONES DE ACCIÓN INFERIORES -->
-        <button class="btn-accion btn-agregar" onclick="alert('Función para agregar a la lista')">Agregar Quiniela</button>
-        <button class="btn-accion btn-limpiar" onclick="limpiarSelecciones()">Limpiar</button>
+        <!-- BOTONES DE ACCIÓN -->
+        <button class="btn-accion btn-agregar" onclick="agregarQuinielaLista()">Agregar Quiniela</button>
+        <button class="btn-accion btn-limpiar" onclick="limpiarSelecciones()">Limpiar Actual</button>
         <button class="btn-accion btn-aleatorio" onclick="seleccionarAleatorio()">Llenado Aleatorio</button>
-        <button class="btn-accion btn-whatsapp" onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
+        
+        <!-- SECCIÓN DE DESGLOSE VISUAL (Aquí se van acumulando) -->
+        <div class="lista-agregadas">
+            <h3>Quinielas en esta venta (<span id="cuenta-lista">0</span>)</h3>
+            <div id="contenedor-items">
+                <!-- Aquí se meten solitas mediante JavaScript -->
+            </div>
+        </div>
+
+        <button class="btn-accion btn-whatsapp" onclick="enviarWhatsApp()">Enviar todas por WhatsApp</button>
     </div>
 
     <script>
+        // Arreglo global para almacenar las quinielas desglosadas en memoria limpia
+        let lasQuinielasGuardadas = [];
+
         function seleccionar(boton, tipo) {
-            let contenedor = boton.parentElement;
-            let botones = contenedor.getElementsByClassName('btn-opcion');
-            for (let btn of botones) { btn.classList.remove('seleccionado'); }
-            boton.classList.add('seleccionado');
+            // Cambio clave: Ahora en lugar de borrar los demás, solo alterna el que tocas
+            boton.classList.toggle('seleccionado');
             calcularTotal();
         }
 
         function calcularTotal() {
-            let totalPartidos = document.querySelectorAll('.partido-card').length;
-            let seleccionados = document.querySelectorAll('.btn-opcion.seleccionado').length;
-            if(seleccionados === totalPartidos) {
-                document.getElementById('total-pago').innerText = "10.00";
-            } else {
+            let tarjetas = document.querySelectorAll('.partido-card');
+            let jugadaValida = true;
+            let dobles = 0;
+            let triples = 0;
+
+            tarjetas.forEach(tarjeta => {
+                let marcados = tarjeta.querySelectorAll('.btn-opcion.seleccionado').length;
+                if (marcados === 0) { jugadaValida = false; }
+                if (marcados === 2) { dobles++; }
+                if (marcados === 3) { triples++; }
+            });
+
+            if (!jugadaValida) {
                 document.getElementById('total-pago').innerText = "0.00";
+                return 0;
             }
+
+            // Aplicamos la fórmula matemática exacta de las quinielas múltiples
+            let costo = 10 * Math.pow(2, dobles) * Math.pow(3, triples);
+            document.getElementById('total-pago').innerText = costo.toFixed(2);
+            return costo;
+        }
+
+        function agregarQuinielaLista() {
+            let nombre = document.getElementById('nombre-participante').value.trim();
+            if (!nombre) {
+                alert("Por favor, pon el Nombre del Participante antes de agregar.");
+                return;
+            }
+
+            let costoActual = calcularTotal();
+            if (costoActual === 0) {
+                alert("Por favor, selecciona al menos una opción (L, E, V) para cada partido.");
+                return;
+            }
+
+            let tarjetas = document.querySelectorAll('.partido-card');
+            let elecciones = [];
+
+            tarjetas.forEach(tarjeta => {
+                let marcados = tarjeta.querySelectorAll('.btn-opcion.seleccionado');
+                let marcasPartido = [];
+                marcados.forEach(btn => marcasPartido.push(btn.innerText));
+                // Guardamos el resultado ordenado como texto (ej: "L", "L-E", "L-E-V")
+                elecciones.push(marcasPartido.join('-'));
+            });
+
+            // Creamos un objeto limpio con los datos para Sheets en el futuro
+            let nuevaQuiniela = {
+                usuario: nombre.toUpperCase(),
+                pronosticos: elecciones,
+                costo: costoActual
+            };
+
+            lasQuinielasGuardadas.push(nuevaQuiniela);
+            actualizarDesgloseVisual();
+            
+            // Limpiamos los botones para la que sigue, pero dejamos el nombre por si el mismo cliente compra otra
+            let seleccionados = document.querySelectorAll('.btn-opcion.seleccionado');
+            for (let btn of seleccionados) { btn.classList.remove('seleccionado'); }
+            document.getElementById('total-pago').innerText = "0.00";
+        }
+
+        function actualizarDesgloseVisual() {
+            let contenedor = document.getElementById('contenedor-items');
+            contenedor.innerHTML = "";
+            document.getElementById('cuenta-lista').innerText = lasQuinielasGuardadas.length;
+
+            lasQuinielasGuardadas.forEach((q, index) => {
+                let div = document.createElement('div');
+                div.className = 'quiniela-item';
+                div.innerHTML = `<strong>#${index + 1} - ${q.usuario}</strong> ($${q.costo})<br>
+                                 Juegos: [ ${q.pronosticos.join(' | ')} ]`;
+                contenedor.appendChild(div);
+            });
         }
 
         function limpiarSelecciones() {
             let seleccionados = document.querySelectorAll('.btn-opcion.seleccionado');
             for (let btn of seleccionados) { btn.classList.remove('seleccionado'); }
             document.getElementById('nombre-participante').value = "";
-            calcularTotal();
+            document.getElementById('total-pago').innerText = "0.00";
         }
 
         function seleccionarAleatorio() {
-            limpiarSelecciones();
             let tarjetas = document.querySelectorAll('.partido-card');
             tarjetas.forEach(tarjeta => {
                 let botones = tarjeta.getElementsByClassName('btn-opcion');
+                for (let btn of botones) { btn.classList.remove('seleccionado'); }
                 let indiceAzar = Math.floor(Math.random() * botones.length);
                 botones[indiceAzar].classList.add('seleccionado');
             });
@@ -287,30 +386,24 @@
         }
 
         function enviarWhatsApp() {
-            let nombre = document.getElementById('nombre-participante').value.trim();
-            if(!nombre) {
-                alert("Por favor, ingresa el nombre del participante.");
+            if (lasQuinielasGuardadas.length === 0) {
+                alert("No hay ninguna quiniela agregada en la lista para enviar.");
                 return;
             }
 
-            let tarjetas = document.querySelectorAll('.partido-card');
-            let mensaje = `*QUINIELAS LIGA MX*\n*Participante:* ${nombre}\n\n*Pronósticos:*\n`;
-            let conteo = 0;
+            let mensaje = `*QUINIELAS LIGA MX - LISTA DE VENTAS*\n\n`;
+            let granTotal = 0;
 
-            tarjetas.forEach((tarjeta, index) => {
-                let seleccionado = tarjeta.querySelector('.btn-opcion.seleccionado');
-                if(seleccionado) {
-                    let eleccion = seleccionado.innerText;
-                    let nombresEquipos = tarjeta.getAttribute('data-equipos');
-                    mensaje += `${index + 1}. ${nombresEquipos} -> *[ ${eleccion} ]*\n`;
-                    conteo++;
-                }
+            lasQuinielasGuardadas.forEach((q, index) => {
+                mensaje += `*Quiniela #${index + 1}*\n`;
+                mensaje += `👤 *Cliente:* ${q.usuario}\n`;
+                mensaje += `💰 *Costo:* $${q.costo}\n`;
+                mensaje += `📝 *Resultados:* ${q.pronosticos.join(',')}\n`;
+                mensaje += `---------------------------\n`;
+                granTotal += q.costo;
             });
 
-            if(conteo < tarjetas.length) {
-                alert("Por favor, selecciona tus pronósticos para todos los partidos.");
-                return;
-            }
+            mensaje += `\n*TOTAL A COBRAR:* $${granTotal.toFixed(2)}`;
 
             let miNumero = "525572246040"; 
             let url = `https://api.whatsapp.com/send?phone=${miNumero}&text=${encodeURIComponent(mensaje)}`;
