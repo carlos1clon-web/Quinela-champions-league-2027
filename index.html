@@ -3,227 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quinielas México - Dominguera</title>
+    <title>Quinielas Liga MX</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background: linear-gradient(135deg, #0b1a30 0%, #050c18 100%);
+            color: white;
             margin: 0;
             padding: 0;
             text-align: center;
+            min-height: 100vh;
         }
-        /* Encabezado Principal */
+        /* Encabezado */
         .header {
-            background-color: #800020; /* Color vino */
-            color: white;
+            padding: 20px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #1e90ff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        /* Contenedor Principal */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
             padding: 15px;
+            box-sizing: border-box;
+        }
+        /* Bloques de Info Inicial */
+        .info-block {
+            background-color: rgba(255, 255, 255, 0.85);
+            color: #333;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: bold;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-            letter-spacing: 1px;
-        }
-        .header h2 {
-            margin: 5px 0 0 0;
-            font-size: 18px;
-            font-weight: normal;
-        }
-        /* Contenedor de la Tabla */
-        .tabla-partidos {
-            width: 100%;
-            max-width: 500px;
-            margin: 10px auto;
-            border-collapse: collapse;
-            background-color: white;
-        }
-        .tabla-partidos td {
-            border: 1px solid #ccc;
-            padding: 10px 5px;
-            vertical-align: middle;
-            font-size: 14px;
-        }
-        /* Estilo de los botones L, E, V */
-        .opcion {
-            font-weight: bold;
-            cursor: pointer;
-            width: 30px;
-            user-select: none;
-        }
-        .opcion:hover {
-            background-color: #ddd;
-        }
-        .seleccionado {
-            background-color: #800020 !important;
-            color: white;
-        }
-        /* Barra de Información */
-        .barra-info {
-            background-color: #600018;
-            color: white;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 8px 0;
-            font-size: 14px;
-            display: flex;
-            justify-content: space-around;
-            font-weight: bold;
-        }
-        .texto-amarillo { color: #fff200; }
-        /* Sección de Informes */
-        .seccion-informes {
-            background-color: white;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 10px 0;
-            font-size: 18px;
-            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
         .btn-facebook {
-            background-color: #b00030;
+            background-color: #00bcd4;
             color: white;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 10px 0;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 10px;
             font-weight: bold;
-            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-        /* Sección de Registro y Totales */
-        .seccion-registro {
-            max-width: 480px;
-            margin: 15px auto;
-            padding: 0 10px;
-        }
-        .total-texto {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .input-nombre {
+        /* Inputs */
+        .input-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #111;
             width: 100%;
             box-sizing: border-box;
             padding: 12px;
             font-size: 16px;
-            border: 1px solid #ccc;
+            border: none;
+            border-radius: 10px;
             margin-bottom: 15px;
+            font-weight: bold;
             text-transform: uppercase;
         }
-        /* Botones de Acción */
-        .bloque-botones {
+        /* Tarjeta de Partido Estilo Nuevo */
+        .partido-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .partido-titulo {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+        /* Contenedor de opciones L E V */
+        .opciones-container {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
+            gap: 10px;
         }
-        .btn-accion {
-            width: 31%;
+        .btn-opcion {
+            flex: 1;
             padding: 12px 0;
             font-size: 16px;
+            font-weight: bold;
+            background-color: #1e90ff;
             color: white;
             border: none;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: bold;
+            transition: all 0.2s;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
         }
-        .btn-limpiar { background-color: #ff0033; }
-        .btn-agregar { background-color: #1e7bd8; }
-        .btn-aleatorio { background-color: #404040; }
-        /* Botón de WhatsApp */
-        .btn-whatsapp {
-            background-color: #3cc226;
-            color: white;
+        .btn-opcion.seleccionado {
+            background-color: #00bcd4 !important;
+            box-shadow: 0 0 12px #00bcd4;
+            transform: scale(1.03);
+        }
+        /* Botones de Acción de abajo */
+        .btn-accion {
             width: 100%;
-            padding: 15px 0;
-            font-size: 18px;
-            border: none;
-            cursor: pointer;
+            padding: 14px 0;
+            font-size: 16px;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .btn-agregar { background-color: #00a8cc; }
+        .btn-limpiar { background-color: #00bcd4; }
+        .btn-aleatorio { background-color: #009688; }
+        .btn-whatsapp { 
+            background-color: #25d366; 
+            font-size: 18px;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>QUINIELAS MÉXICO</h1>
-        <h2>DOMINGUERA</h2>
-    </div>
+    <div class="header">Quinielas Liga MX</div>
 
-    <table class="tabla-partidos">
-        <tr data-partido="1">
-            <td class="opcion" onclick="seleccionar(this, 'L')">L</td>
-            <td>América</td>
-            <td class="opcion" onclick="seleccionar(this, 'E')">E</td>
-            <td>Chivas</td>
-            <td class="opcion" onclick="seleccionar(this, 'V')">V</td>
-        </tr>
-        <tr data-partido="2">
-            <td class="opcion" onclick="seleccionar(this, 'L')">L</td>
-            <td>Cruz Azul</td>
-            <td class="opcion" onclick="seleccionar(this, 'E')">E</td>
-            <td>Pumas</td>
-            <td class="opcion" onclick="seleccionar(this, 'V')">V</td>
-        </tr>
-        <tr data-partido="3">
-            <td class="opcion" onclick="seleccionar(this, 'L')">L</td>
-            <td>Tigres</td>
-            <td class="opcion" onclick="seleccionar(this, 'E')">E</td>
-            <td>Monterrey</td>
-            <td class="opcion" onclick="seleccionar(this, 'V')">V</td>
-        </tr>
-        <tr data-partido="4">
-            <td class="opcion" onclick="seleccionar(this, 'L')">L</td>
-            <td>Toluca</td>
-            <td class="opcion" onclick="seleccionar(this, 'E')">E</td>
-            <td>Pachuca</td>
-            <td class="opcion" onclick="seleccionar(this, 'V')">V</td>
-        </tr>
-    </table>
-
-    <div class="barra-info">
-        <div>PRECIO: <span class="texto-amarillo">$10.00</span></div>
-        <div>CIERRE: SÁBADO 11:50 P.M.</div>
-    </div>
-
-    <div class="seccion-informes">
-        INFORMES: +5572246040
-    </div>
-    
-    <a href="https://www.facebook.com/share/g/1DC7Z9rh9t/?mibextid=wwXIfr" target="_blank" style="text-decoration: none; display: block;">
-        <div class="btn-facebook">
-            f QUINIELAS MÉXICO
-        </div>
-    </a>
-
-    <div class="seccion-registro">
-        <div class="total-texto">TOTAL: $<span id="total-pago">0.00</span></div>
+    <div class="container">
+        <!-- Bloques informativos superiores -->
+        <div class="info-block">Jornada 10</div>
+        <div class="info-block">$10 pesos por quiniela</div>
+        <div class="info-block">Cierre: Viernes 20:00</div>
+        <div class="info-block">Informes al +52 55 7224 6040</div>
         
-        <input type="text" id="nombre-participante" class="input-nombre" placeholder="NOMBRE DEL PARTICIPANTE">
+        <a href="https://www.facebook.com/share/g/1DC7Z9rh9t/?mibextid=wwXIfr" target="_blank" class="btn-facebook">
+            Grupo de Facebook
+        </a>
 
-        <div class="bloque-botones">
-            <button class="btn-accion btn-limpiar" onclick="limpiarSelecciones()">Limpiar</button>
-            <button class="btn-accion btn-hybrid btn-agregar" onclick="alert('Función para agregar a la lista')">Agregar</button>
-            <button class="btn-accion btn-aleatorio" onclick="seleccionarAleatorio()">Aleatorio</button>
+        <div class="info-block" style="background-color: rgba(255,255,255,0.95);">
+            TOTAL: $<span id="total-pago">0.00</span>
+        </div>
+        
+        <input type="text" id="nombre-participante" class="input-box" placeholder="Nombre del participante">
+
+        <!-- AQUÍ EMPIEZAN LOS 9 PARTIDOS -->
+        
+        <!-- Partido 1 -->
+        <div class="partido-card" data-partido="1" data-equipos="Real Madrid vs Milan">
+            <div class="partido-titulo">Real Madrid vs Milan</div>
+            <div class="opciones-container">
+                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+            </div>
         </div>
 
-        <button class="btn-whatsapp" onclick="enviarWhatsApp()">
-            Enviar por WhatsApp
-        </button>
+        <!-- Partido 2 -->
+        <div class="partido-card" data-partido="2" data-equipos="Barcelona vs Bayern">
+            <div class="partido-titulo">Barcelona vs Bayern</div>
+            <div class="opciones-container">
+                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+            </div>
+        </div>
+
+        <!-- Partido 3 -->
+        <div class="partido-card" data-partido="3" data-equipos="Man. City vs Inter">
+            <div class="partido-titulo">Man. City vs Inter</div>
+            <div class="opciones-container">
+                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+            </div>
+        </div>
+
+        <!-- Partido 4 -->
+        <div class="partido-card" data-partido="4" data-equipos="PSG vs Atletico Madrid">
+            <div class="partido-titulo">PSG vs Atletico Madrid</div>
+            <div class="opciones-container">
+                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+            </div>
+        </div>
+
+        <!-- Partido 5 -->
+        <div class="partido-card" data-partido="5" data-equipos="Arsenal vs Juventus">
+            <div class="partido-titulo">Arsenal vs Juventus</div>
+            <div class="opciones-container">
+                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+            </div>
+        </div>
+
+        <!-- Partido 6 -->
+        <div class="partido-card" data-partido="6" data-equipos="Dortmund vs Liverpool">
+            <div class="partido-titulo">Dortmund vs Liverpool</div>
+            <div class="opciones-container">
+                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+            </div>
+        </div>
+
+        <!-- Partido 7 -->
+        <div class="partido-card" data-partido="7" data-equipos="Benfica vs Monaco">
+            <div class="partido-titulo">Benfica vs Monaco</div>
+            <div class="opciones-container">
+                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+            </div>
+        </div>
+
+        <!-- Partido 8 (¡Aquí cambie a los equipos que me pediste!) -->
+        <div class="partido-card" data-partido="8" data-equipos="Pumas vs Chivas">
+            <div class="partido-titulo">Pumas vs Chivas</div>
+            <div class="opciones-container">
+                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+            </div>
+        </div>
+
+        <!-- Partido 9 (¡Aquí el otro ejemplo!) -->
+        <div class="partido-card" data-partido="9" data-equipos="América vs Cruz Azul">
+            <div class="partido-titulo">América vs Cruz Azul</div>
+            <div class="opciones-container">
+                <button class="btn-opcion" onclick="seleccionar(this, 'L')">L</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'E')">E</button>
+                <button class="btn-opcion" onclick="seleccionar(this, 'V')">V</button>
+            </div>
+        </div>
+
+        <!-- BOTONES DE ACCIÓN INFERIORES -->
+        <button class="btn-accion btn-agregar" onclick="alert('Función para agregar a la lista')">Agregar Quiniela</button>
+        <button class="btn-accion btn-limpiar" onclick="limpiarSelecciones()">Limpiar</button>
+        <button class="btn-accion btn-aleatorio" onclick="seleccionarAleatorio()">Llenado Aleatorio</button>
+        <button class="btn-accion btn-whatsapp" onclick="enviarWhatsApp()">Enviar por WhatsApp</button>
     </div>
 
     <script>
-        function seleccionar(celda, tipo) {
-            let fila = celda.parentElement;
-            let opciones = fila.getElementsByClassName('opcion');
-            for (let op of opciones) { op.classList.remove('seleccionado'); }
-            celda.classList.add('seleccionado');
+        function seleccionar(boton, tipo) {
+            let contenedor = boton.parentElement;
+            let botones = contenedor.getElementsByClassName('btn-opcion');
+            for (let btn of botones) { btn.classList.remove('seleccionado'); }
+            boton.classList.add('seleccionado');
             calcularTotal();
         }
 
         function calcularTotal() {
-            let filas = document.querySelectorAll('.tabla-partidos tr');
-            let seleccionados = document.querySelectorAll('.opcion.seleccionado').length;
-            if(seleccionados === filas.length) {
+            let totalPartidos = document.querySelectorAll('.partido-card').length;
+            let seleccionados = document.querySelectorAll('.btn-opcion.seleccionado').length;
+            if(seleccionados === totalPartidos) {
                 document.getElementById('total-pago').innerText = "10.00";
             } else {
                 document.getElementById('total-pago').innerText = "0.00";
@@ -231,19 +269,19 @@
         }
 
         function limpiarSelecciones() {
-            let seleccionados = document.querySelectorAll('.opcion.seleccionado');
-            for (let op of seleccionados) { op.classList.remove('seleccionado'); }
+            let seleccionados = document.querySelectorAll('.btn-opcion.seleccionado');
+            for (let btn of seleccionados) { btn.classList.remove('seleccionado'); }
             document.getElementById('nombre-participante').value = "";
             calcularTotal();
         }
 
         function seleccionarAleatorio() {
             limpiarSelecciones();
-            let filas = document.querySelectorAll('.tabla-partidos tr');
-            filas.forEach(fila => {
-                let opciones = fila.getElementsByClassName('opcion');
-                let indiceAzar = Math.floor(Math.random() * opciones.length);
-                opciones[indiceAzar].classList.add('seleccionado');
+            let tarjetas = document.querySelectorAll('.partido-card');
+            tarjetas.forEach(tarjeta => {
+                let botones = tarjeta.getElementsByClassName('btn-opcion');
+                let indiceAzar = Math.floor(Math.random() * botones.length);
+                botones[indiceAzar].classList.add('seleccionado');
             });
             calcularTotal();
         }
@@ -255,27 +293,25 @@
                 return;
             }
 
-            let filas = document.querySelectorAll('.tabla-partidos tr');
-            let mensaje = `*QUINIELA DOMINGUERA*\n*Participante:* ${nombre}\n\n*Pronósticos:*\n`;
+            let tarjetas = document.querySelectorAll('.partido-card');
+            let mensaje = `*QUINIELAS LIGA MX*\n*Participante:* ${nombre}\n\n*Pronósticos:*\n`;
             let conteo = 0;
 
-            filas.forEach((fila, index) => {
-                let seleccionado = fila.querySelector('.opcion.seleccionado');
+            tarjetas.forEach((tarjeta, index) => {
+                let seleccionado = tarjeta.querySelector('.btn-opcion.seleccionado');
                 if(seleccionado) {
                     let eleccion = seleccionado.innerText;
-                    let eqLocal = fila.cells[1].innerText;
-                    let eqVis = fila.cells[3].innerText;
-                    mensaje += `${index + 1}. ${eqLocal} vs ${eqVis} -> *[ ${eleccion} ]*\n`;
+                    let nombresEquipos = tarjeta.getAttribute('data-equipos');
+                    mensaje += `${index + 1}. ${nombresEquipos} -> *[ ${eleccion} ]*\n`;
                     conteo++;
                 }
             });
 
-            if(conteo < filas.length) {
+            if(conteo < tarjetas.length) {
                 alert("Por favor, selecciona tus pronósticos para todos los partidos.");
                 return;
             }
 
-            // TU NÚMERO DE WHATSAPP YA CONFIGURADO AQUÍ:
             let miNumero = "525572246040"; 
             let url = `https://api.whatsapp.com/send?phone=${miNumero}&text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
